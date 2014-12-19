@@ -1,0 +1,44 @@
+<VirtualHost *:80>
+
+        ServerName libresoft.pc16.s04
+        ServerAdmin webmaster@localhost
+        DocumentRoot /srv/hosting/libreria
+
+        <Directory />
+                Require ip 172.20.20.0/24
+        </Directory>
+
+        <Location /secure>
+
+                AuthType Basic
+
+                AuthName "private area"
+
+                AuthBasicProvider file
+
+                AuthUserFile /usr/local/apache/passwords
+
+                Require valid-user
+
+        </Location>
+
+
+        <Directory /private>
+
+                AuthType Digest
+
+                AuthName "Acceso a una zona privada"
+
+                AuthDigestProvider file
+
+                AuthUserFile /usr/local/apache/passwords
+
+                Require valid-user
+
+         </Directory>
+
+
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+</VirtualHost>
